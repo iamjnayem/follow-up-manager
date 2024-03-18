@@ -1,0 +1,99 @@
+@model Follow_Up_Manager.Models.ViewModels.FollowUpViewModel;
+@{
+    ViewData["Title"] = "Create Follow Up";
+}
+<div id="content">
+    <div class="container-fluid">
+        <main>
+            <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+                <div class="container-xl px-4">
+                    <div class="page-header-content pt-4">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto mt-4">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><i data-feather="edit-3"></i></div>
+                                    Follow Up
+                                </h1>
+                                @* <div class="page-header-subtitle my-2">Provide necessary inputs to create a follow
+                                up</div> *@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-xl px-4 mt-n10">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <!-- Default Bootstrap Form Controls-->
+                        <div id="default">
+                            <div class="card mb-4">
+                                <div class="card-header">Provide necessary inputs to create a follow up</div>
+                                <div class="card-body">
+                                    <!-- Component Preview-->
+                                    <div class="sbp-preview">
+                                        <div class="sbp-preview-content">
+                                            <form asp-action="Create" method="post">
+                                                <div class="mb-3">
+                                                    <label asp-for="Task">Task</label>
+                                                    <input class="form-control" id="task" asp-for="Task" type="text"
+                                                        placeholder="Your Task" />
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label asp-for="StartDate">Start Date</label>
+                                                    <input class="form-control" id="start_date" asp-for="StartDate" type="text"
+                                                        placeholder="Select Start Date">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label asp-for="FollowUpDate">Follow Up Date</label>
+                                                    <input class="form-control" id="follow_up_date" asp-for="FollowUpDate" type="text"
+                                                        placeholder="Select follow up Date">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label asp-for="Name">Name</label>
+                                                    <input class="form-control" id="name" asp-for="Name"  type="text"
+                                                        placeholder="Your Name" />
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label asp-for="Project">Project</label>
+                                                    <input class="form-control" id="project" asp-for="Project" type="text"
+                                                        placeholder="Your Project" />
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <button class="btn btn-sm btn-primary" type="submit">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+@section Scripts {
+
+<!-- Add Bootstrap Datepicker CSS and JS links -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+    // Activate the datepicker
+    $(document).ready(function(){
+        $('#start_date').datepicker();
+        $('#follow_up_date').datepicker();
+    });
+</script>
+}
