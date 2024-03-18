@@ -1,6 +1,6 @@
 @model Follow_Up_Manager.Models.ViewModels.FollowUpViewModel;
 @{
-    ViewData["Title"] = "Create Follow Up";
+    ViewData["Title"] = "Edit Follow Up";
 }
 <div id="content">
     <div class="container-fluid">
@@ -12,7 +12,7 @@
                             <div class="col-auto mt-4">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="edit-3"></i></div>
-                                    Follow Up
+                                    Edit Follow Up
                                 </h1>
                                 @* <div class="page-header-subtitle my-2">Provide necessary inputs to create a follow
                                 up</div> *@
@@ -28,44 +28,39 @@
                         <!-- Default Bootstrap Form Controls-->
                         <div id="default">
                             <div class="card mb-4">
-                                <div class="card-header">Provide necessary inputs to create a follow up</div>
+                                <div class="card-header">Provide necessary inputs to Edit a follow up</div>
                                 <div class="card-body">
                                     <!-- Component Preview-->
                                     <div class="sbp-preview">
                                         <div class="sbp-preview-content">
-                                            <form asp-action="Create" method="post">
+                                            <form asp-action="Edit" asp-route-id="@ViewBag.FollowUpViewModel.Id" method="post">
                                                 <div class="mb-3">
                                                     <label asp-for="Task">Task</label>
-                                                    <input class="form-control" id="task" asp-for="Task" type="text"
-                                                        placeholder="Your Task" />
+                                                    <input class="form-control" id="task" asp-for="Task" type="text" value="@ViewBag.FollowUpViewModel.Task" readonly/>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="StartDate">Start Date</label>
-                                                    <input class="form-control" id="start_date" asp-for="StartDate" type="text"
-                                                        placeholder="Select Start Date">
+                                                    <input class="form-control" id="start_date" asp-for="StartDate" type="text" value="@ViewBag.FollowUpViewModel.StartDate">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="FollowUpDate">Follow Up Date</label>
-                                                    <input class="form-control" id="follow_up_date" asp-for="FollowUpDate" type="text"
-                                                        placeholder="Select follow up Date">
+                                                    <input class="form-control" id="follow_up_date" asp-for="FollowUpDate" type="text" value="@ViewBag.FollowUpViewModel.FollowUpDate">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="Name">Name</label>
-                                                    <input class="form-control" id="name" asp-for="Name"  type="text"
-                                                        placeholder="Your Name" />
+                                                    <input class="form-control" id="name" asp-for="Name"  type="text" value="@ViewBag.FollowUpViewModel.Name"/>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="Project">Project</label>
-                                                    <input class="form-control" id="project" asp-for="Project" type="text"
-                                                        placeholder="Your Project" />
+                                                    <input class="form-control" id="project" asp-for="Project" type="text" value="@ViewBag.FollowUpViewModel.Project"/>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <button class="btn btn-sm btn-primary" type="submit">Submit</button>
+                                                    <button class="btn btn-sm btn-primary" type="submit">Update</button>
                                                 </div>
                                             </form>
                                         </div>

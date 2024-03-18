@@ -10,5 +10,7 @@ namespace Follow_Up_Manager.interfaces;
 public interface IFollowUpService
 {
     Task<List<FollowUpViewModel>> GetAllFollowUps();
+    Task<FollowUpViewModel> GetFollowUpById(int id);
     Task<bool> StoreFollowUp(FollowUpViewModel followUpViewModel);
+    Task<bool> UpdateFollowUp(FollowUpViewModel followUpViewModel);
 }

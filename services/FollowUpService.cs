@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Follow_Up_Manager.services;
 
-public class FollowUpService:IFollowUpService
+public class FollowUpService : IFollowUpService
 {
     private readonly FollowupContext _dbContext;
     public FollowUpService(FollowupContext dbContext)
@@ -20,13 +20,15 @@ public class FollowUpService:IFollowUpService
     }
 
 
-    public async Task<List<FollowUpViewModel>> GetAllFollowUps(){
+    public async Task<List<FollowUpViewModel>> GetAllFollowUps()
+    {
         List<FollowUp> data = await _dbContext.FollowUps.ToListAsync();
         List<FollowUpViewModel> dataList = new List<FollowUpViewModel>();
 
-        foreach(var followUp in data)
+        foreach (var followUp in data)
         {
             FollowUpViewModel model = new FollowUpViewModel();
+            model.Id = followUp.Id;
             model.Task = followUp.Task;
             model.StartDate = followUp.StartDate;
             model.FollowUpDate = followUp.FollowUpDate;
@@ -52,10 +54,10 @@ public class FollowUpService:IFollowUpService
                     FollowUpDate = followUpViewModel.FollowUpDate,
                     Status = 0
                 };
-                
+
                 await _dbContext.AddAsync(followUp);
                 await _dbContext.SaveChangesAsync();
-                
+
                 ActivityLog activityLog = new ActivityLog
                 {
                     FollowUpId = followUp.Id,
@@ -63,18 +65,95 @@ public class FollowUpService:IFollowUpService
                     Description = "Follow Up Created",
                     CreatedAt = DateTime.Now
                 };
-                
+
                 await _dbContext.AddAsync(activityLog);
                 await _dbContext.SaveChangesAsync();
                 transaction.Commit();
-                
+
                 return true;
             }
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw; 
+                throw;
             }
         }
+    }
+
+
+    public async Task<FollowUpViewModel> GetFollowUpById(int id)
+    {
+
+        try
+        {
+            FollowUpViewModel followUpViewModel = new FollowUpViewModel();
+
+            var followUp = await _dbContext.FollowUps.FirstOrDefaultAsync(f => f.Id == id);
+
+            if (followUp == null)
+            {
+                return followUpViewModel;
+            }
+
+            followUpViewModel.Id = followUp.Id;
+            followUpViewModel.Name = followUp.Name;
+            followUpViewModel.Task = followUp.Task;
+            followUpViewModel.StartDate = followUp.StartDate;
+            followUpViewModel.FollowUpDate = followUp.FollowUpDate;
+            followUpViewModel.Project = followUp.Project;
+
+            return followUpViewModel;
+
+
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+    }
+
+    public async Task<bool> UpdateFollowUp(FollowUpViewModel followUpViewModel)
+    {
+        try
+        {
+            var followUp = await _dbContext.FollowUps.FirstOrDefaultAsync(f => f.Id == followUpViewModel.Id);
+
+            if (followUp == null)
+            {
+                return false;
+            }
+
+
+            if (followUpViewModel.Name != null)
+            {
+                followUp.Name = followUpViewModel.Name;
+            }
+
+            if (followUpViewModel.StartDate != null)
+            {
+                followUp.StartDate = followUpViewModel.StartDate;
+            }
+
+            if (followUpViewModel.FollowUpDate != null)
+            {
+                followUp.FollowUpDate = followUpViewModel.FollowUpDate;
+            }
+
+            if (followUpViewModel.Project != null)
+            {
+                followUp.Project = followUpViewModel.Project;
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
+
     }
 }

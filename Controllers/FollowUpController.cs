@@ -36,11 +36,28 @@ public class FollowUpController : Controller
         await _followUpService.StoreFollowUp(followUpViewModel);
         return RedirectToAction("Index");
     }
-    public IActionResult Edit()
+
+    public async Task<IActionResult> Edit(int id)
     {
-        Console.WriteLine("");
+        var followUpViewModel = await _followUpService.GetFollowUpById(id);
+        if(followUpViewModel.Id == 0)
+        {
+            // add toaster that no follow up found 
+            return RedirectToAction("Index");
+        }
+
+        ViewBag.FollowUpViewModel = followUpViewModel;
         return View();
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(FollowUpViewModel followUpViewModel)
+    {
+
+        await _followUpService.UpdateFollowUp(followUpViewModel);
+        return RedirectToAction("Index");
+    }
+
 
     // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     // public IActionResult Error()
