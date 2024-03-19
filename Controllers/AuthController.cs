@@ -26,6 +26,7 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<IActionResult> SignUp(SignUpViewModel signUpViewModel)
     {
+       
         if(!ModelState.IsValid)
         {
             //return view with error message
@@ -36,11 +37,11 @@ public class AuthController : Controller
 
         if(!isRegistered)
         {
-            //sent some error message;
+            Console.WriteLine("Not Registered");
         }
         
-        //Redirect to login page;
-        return View("");
+        //return to signup page with error message
+        return View(signUpViewModel);
     }
 
     // public IActionResult Create()
