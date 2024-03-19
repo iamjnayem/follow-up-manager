@@ -15,6 +15,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddProgressiveWebApp();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IFollowUpService, FollowUpService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 
 
 
