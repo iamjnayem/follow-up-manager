@@ -12,10 +12,13 @@ namespace Follow_Up_Manager.Controllers;
 public class AuthController : Controller
 { 
     private readonly IAuthService _authService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AuthController(IAuthService authService)
+
+    public AuthController(IAuthService authService, IHttpContextAccessor httpContextAccessor)
     {
         _authService = authService;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public IActionResult SignUp()
@@ -34,14 +37,45 @@ public class AuthController : Controller
         }
 
         var isRegistered = await _authService.SignUp(signUpViewModel);
-
+    
         if(!isRegistered)
         {
-            Console.WriteLine("Not Registered");
+            return View(signUpViewModel);
+
         }
-        
-        //return to signup page with error message
-        return View(signUpViewModel);
+
+        // return View();
+
+        return View("LogIn");
+    }
+
+
+
+    public IActionResult LogIn()
+    {
+        return View("LogIn");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> LogIn(LoginViewModel loginViewModel)
+    {
+
+        if(!ModelState.IsValid)
+        {
+            return View(loginViewModel);
+        }
+
+        var isLoggedIn = await _authService.LogIn(loginViewModel,_httpContextAccessor);
+
+        return RedirectToAction("Index", "Home");
+
+    }
+
+
+    public async Task<IActionResult> LogOut()
+    {
+      await _authService.LogOut(_httpContextAccessor);  
+      return View("LogIn");
     }
 
     // public IActionResult Create()

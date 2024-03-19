@@ -10,4 +10,6 @@ namespace Follow_Up_Manager.interfaces;
 public interface IAuthService
 {
     Task<bool> SignUp(SignUpViewModel signUpViewModel);
+    Task<bool> LogIn(LoginViewModel loginViewModel, IHttpContextAccessor httpContextAccessor);
+    Task<bool> LogOut(IHttpContextAccessor httpContextAccessor);
 }

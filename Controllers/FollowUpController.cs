@@ -5,10 +5,11 @@ using Follow_Up_Manager.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Follow_Up_Manager.interfaces;
 using Follow_Up_Manager.services;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Follow_Up_Manager.Controllers;
-
+[Authorize]
 public class FollowUpController : Controller
 { 
     private readonly IFollowUpService _followUpService;

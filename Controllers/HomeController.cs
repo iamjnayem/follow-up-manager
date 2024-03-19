@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Follow_Up_Manager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Follow_Up_Manager.Controllers;
-
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
