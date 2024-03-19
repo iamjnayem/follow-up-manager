@@ -5,6 +5,8 @@ namespace Follow_Up_Manager.Models.ViewModels;
 public class LoginViewModel
 {
 
+    public long? Id { get; set; }
+
     [Required(ErrorMessage = "* Email is Required")]
     public string Email { get; set; }
 

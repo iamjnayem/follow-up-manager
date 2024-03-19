@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Follow_Up_Manager.interfaces;
 using Follow_Up_Manager.Models;
@@ -14,15 +15,23 @@ namespace Follow_Up_Manager.services;
 public class FollowUpService : IFollowUpService
 {
     private readonly FollowupContext _dbContext;
-    public FollowUpService(FollowupContext dbContext)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    public FollowUpService(FollowupContext dbContext, IHttpContextAccessor httpContextAccessor)
     {
         _dbContext = dbContext;
+        _httpContextAccessor = httpContextAccessor;
     }
 
 
     public async Task<List<FollowUpViewModel>> GetAllFollowUps()
     {
-        List<FollowUp> data = await _dbContext.FollowUps.ToListAsync();
+        var userId = _httpContextAccessor?.HttpContext?.Session.GetString("UserId");
+        Console.WriteLine(userId);
+
+        List<FollowUp> data = await _dbContext.FollowUps
+                            .Where(f => f.Id == long.Parse(userId))
+                            .OrderBy(f => f.FollowUpDate).ToListAsync();
+
         List<FollowUpViewModel> dataList = new List<FollowUpViewModel>();
 
         foreach (var followUp in data)
@@ -45,6 +54,7 @@ public class FollowUpService : IFollowUpService
         {
             try
             {
+                var userId = _httpContextAccessor?.HttpContext?.Session.GetString("UserId");
                 FollowUp followUp = new FollowUp
                 {
                     Name = followUpViewModel.Name,
@@ -52,7 +62,9 @@ public class FollowUpService : IFollowUpService
                     Project = followUpViewModel.Project,
                     StartDate = followUpViewModel.StartDate,
                     FollowUpDate = followUpViewModel.FollowUpDate,
-                    Status = 0
+                    Status = 0,
+                    UserId = long.Parse(userId)
+
                 };
 
                 await _dbContext.AddAsync(followUp);
@@ -61,7 +73,7 @@ public class FollowUpService : IFollowUpService
                 ActivityLog activityLog = new ActivityLog
                 {
                     FollowUpId = followUp.Id,
-                    UserId = 1, //should be auth user id
+                    UserId = long.Parse(userId),
                     Description = "Follow Up Created",
                     CreatedAt = DateTime.Now
                 };

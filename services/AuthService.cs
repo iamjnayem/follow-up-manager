@@ -66,6 +66,7 @@ public class AuthService : IAuthService
         var principal = new ClaimsPrincipal(identity);
         await httpContextAccessor?.HttpContext?.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         httpContextAccessor?.HttpContext?.Session.SetString("Email", loginViewModel.Email);
+        httpContextAccessor?.HttpContext?.Session.SetString("UserId", user.Id.ToString());
 
         return true;
     }
@@ -74,6 +75,7 @@ public class AuthService : IAuthService
     public async Task<bool> LogOut(IHttpContextAccessor httpContextAccessor)
     {
         await httpContextAccessor?.HttpContext?.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        httpContextAccessor?.HttpContext?.Session.Clear();
         return true;
     }
 
