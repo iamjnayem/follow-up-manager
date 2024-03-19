@@ -4,19 +4,22 @@ namespace Follow_Up_Manager.Models.ViewModels;
 
 public class SignUpViewModel
 {
-    [Required]
+    [Required(ErrorMessage = "* First Name is Required")]
     public string FirstName { get; set; } = null!;
 
-    [Required]
+    [Required(ErrorMessage = "* Last Name is Required")]
     public string LastName { get; set; } = null!;
 
-    [Required]
+    [Required(ErrorMessage = "* Email is Required")]
     public string Email { get; set; } = null!;
 
-    [Required]
+    [Required(ErrorMessage = "* Password is Required")]
     public string Password { get; set; } = null!;
 
-    [Required]
+    [Required(ErrorMessage = "* Password is Required")]
     public string RePassword{get; set;} = null!;
+
+
+    public string? EmailValidationError{get;set;}
 
 }

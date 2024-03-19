@@ -51,10 +51,18 @@
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address..." asp-for="Email">
+                                            @if(@TempData["EmailErrorMessage"] != null)
+                                                {
+                                                    <span class="text-danger">@TempData["EmailErrorMessage"]</span>
+                                                }
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password" asp-for="Password">
+                                                 @if(@TempData["PasswordErrorMessage"] != null)
+                                                {
+                                                    <span class="text-danger">@TempData["PasswordErrorMessage"]</span>
+                                                }
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -63,7 +71,11 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                          <div style="height:200px">
+
+                                         </div>
+
+                                        <button type="submit" class="btn btn-primary btn-user btn-block my-5">
                                             Login
                                         </button>
                                     </form>
@@ -71,7 +83,7 @@
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" asp-action="SignUp" asp-controller="Auth">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>

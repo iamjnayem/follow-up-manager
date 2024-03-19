@@ -32,14 +32,20 @@ public class AuthController : Controller
        
         if(!ModelState.IsValid)
         {
-            //return view with error message
             return View(signUpViewModel);
         }
+
 
         var isRegistered = await _authService.SignUp(signUpViewModel);
     
         if(!isRegistered)
         {
+
+            if(signUpViewModel.EmailValidationError != "")
+            {
+                TempData["EmailValidationError"] = signUpViewModel.EmailValidationError;
+            }
+
             return View(signUpViewModel);
 
         }
@@ -67,6 +73,20 @@ public class AuthController : Controller
 
         var isLoggedIn = await _authService.LogIn(loginViewModel,_httpContextAccessor);
 
+        if(!isLoggedIn)
+        {
+            if(loginViewModel.EmailErrorMessage != "")
+            {
+                TempData["EmailErrorMessage"] = loginViewModel.EmailErrorMessage;
+            }
+
+            if(loginViewModel.PasswordErrorMessage != "")
+            {
+                TempData["PasswordErrorMessage"] = loginViewModel.PasswordErrorMessage;
+            }
+            return View(loginViewModel);
+        }
+
         return RedirectToAction("Index", "Home");
 
     }
@@ -78,43 +98,5 @@ public class AuthController : Controller
       return View("LogIn");
     }
 
-    // public IActionResult Create()
-    // {
-    //     return View();
-    // }
-    
-    // [HttpPost]
-    // public async Task<IActionResult> Create(FollowUpViewModel followUpViewModel)
-    // {
-    //     await _followUpService.StoreFollowUp(followUpViewModel);
-    //     return RedirectToAction("Index");
-    // }
-
-    // public async Task<IActionResult> Edit(int id)
-    // {
-    //     var followUpViewModel = await _followUpService.GetFollowUpById(id);
-    //     if(followUpViewModel.Id == 0)
-    //     {
-    //         // add toaster that no follow up found 
-    //         return RedirectToAction("Index");
-    //     }
-
-    //     ViewBag.FollowUpViewModel = followUpViewModel;
-    //     return View();
-    // }
-
-    // [HttpPost]
-    // public async Task<IActionResult> Edit(FollowUpViewModel followUpViewModel)
-    // {
-
-    //     await _followUpService.UpdateFollowUp(followUpViewModel);
-    //     return RedirectToAction("Index");
-    // }
-
-
-    // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    // public IActionResult Error()
-    // {
-    //     return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    // }
+  
 }
