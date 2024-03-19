@@ -1,0 +1,132 @@
+@model Follow_Up_Manager.Models.ViewModels.FollowUpViewModel;
+@{
+    ViewData["Title"] = "Edit Follow Up";
+}
+<div id="content">
+    <div class="container-fluid">
+        <main>
+            <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+                <div class="container-xl px-4">
+                    <div class="page-header-content pt-4">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto mt-4">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><i data-feather="edit-3"></i></div>
+                                    Follow Up Details
+                                </h1>
+                                @* <div class="page-header-subtitle my-2">Provide necessary inputs to create a follow
+                                up</div> *@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-xl px-4 mt-n10">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <!-- Default Bootstrap Form Controls-->
+                        <div id="default">
+                            <div class="card mb-4">
+                                <div class="card-header">Provide necessary inputs to Edit a follow up</div>
+                                <div class="card-body">
+                                    <!-- Component Preview-->
+                                    <div class="sbp-preview">
+                                        <div class="sbp-preview-content">
+                                            <form >
+                                                <div class="mb-3">
+                                                    <label asp-for="Task">Task</label>
+                                                    <input class="form-control" id="task" asp-for="Task" type="text"
+                                                        value="@ViewBag.FollowUpViewModel.Task"  readonly/>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label asp-for="StartDate">Start Date</label>
+                                                    <input class="form-control" id="start_date" asp-for="StartDate"
+                                                        type="text" value="@DateOnly.FromDateTime(@ViewBag.FollowUpViewModel.StartDate).ToString("dd-MM-yyyy")" readonly>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label asp-for="FollowUpDate">Follow Up Date</label>
+                                                    <input class="form-control" id="follow_up_date"
+                                                        asp-for="FollowUpDate" type="text"
+                                                        value="@DateOnly.FromDateTime(@ViewBag.FollowUpViewModel.FollowUpDate).ToString("dd-MM-yyyy")" readonly>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label asp-for="Name">Name</label>
+                                                    <input class="form-control" id="name" asp-for="Name" type="text"
+                                                        value="@ViewBag.FollowUpViewModel.Name" readonly/>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label asp-for="Project">Project</label>
+                                                    <input class="form-control" id="project" asp-for="Project"
+                                                        type="text" value="@ViewBag.FollowUpViewModel.Project" readonly />
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <button class="btn btn-sm btn-primary" type="submit">Update</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                <div class="nav-sticky">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav flex-column" id="stickyNav">
+
+                                @foreach(var history in @ViewBag.activityLogs)
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="#default">@history.Description</a></li>
+                                }
+                                @* <li class="nav-item"><a class="nav-link" href="#solid">Solid Form Controls</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#checkbox">Default Checkboxes &amp;
+                                        Radio</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#checkboxSolid">Solid Checkboxes &amp;
+                                        Radio</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#inputGroupJoined">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            Input Groups
+                                            <span class="badge bg-primary-soft text-primary">New</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#dateRangePicker">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            Date Range Picker
+                                            <span class="badge bg-primary-soft text-primary">New</span>
+                                        </div>
+                                    </a> *@
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+                
+            </div>
+            </div>
+
+            
+        </main>
+    </div>
+</div>
+
+@section Scripts {
+
+    <!-- Add Bootstrap Datepicker CSS and JS links -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+}

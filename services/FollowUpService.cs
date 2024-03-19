@@ -23,13 +23,12 @@ public class FollowUpService : IFollowUpService
     }
 
 
-    public async Task<List<FollowUpViewModel>> GetAllFollowUps()
+    public async Task<List<FollowUpViewModel>>? GetAllFollowUps()
     {
         var userId = _httpContextAccessor?.HttpContext?.Session.GetString("UserId");
-        Console.WriteLine(userId);
 
         List<FollowUp> data = await _dbContext.FollowUps
-                            .Where(f => f.Id == long.Parse(userId))
+                            .Where(f => f.UserId == long.Parse(userId))
                             .OrderBy(f => f.FollowUpDate).ToListAsync();
 
         List<FollowUpViewModel> dataList = new List<FollowUpViewModel>();
@@ -37,6 +36,7 @@ public class FollowUpService : IFollowUpService
         foreach (var followUp in data)
         {
             FollowUpViewModel model = new FollowUpViewModel();
+
             model.Id = followUp.Id;
             model.Task = followUp.Task;
             model.StartDate = followUp.StartDate;
@@ -64,7 +64,6 @@ public class FollowUpService : IFollowUpService
                     FollowUpDate = followUpViewModel.FollowUpDate,
                     Status = 0,
                     UserId = long.Parse(userId)
-
                 };
 
                 await _dbContext.AddAsync(followUp);
@@ -168,4 +167,20 @@ public class FollowUpService : IFollowUpService
         }
 
     }
+
+
+    public async Task<List<ActivityLog>>? GetActivityLogsByFollowUpId(int id)
+    {
+        var userId = _httpContextAccessor?.HttpContext?.Session.GetString("UserId");
+        List<ActivityLog> data = await _dbContext.ActivityLogs
+                            .Where(f => f.UserId == int.Parse(userId))
+                            .Where(f => f.FollowUpId == id)
+                            .OrderByDescending(f => f.CreatedAt).ToListAsync();
+
+        return data;
+
+
+    }
+
+
 }

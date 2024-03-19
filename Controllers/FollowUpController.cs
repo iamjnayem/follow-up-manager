@@ -60,6 +60,28 @@ public class FollowUpController : Controller
     }
 
 
+    public async Task<IActionResult> View(FollowUpViewModel followUpViewModel)
+    {
+        // int id = Convert.ToInt32(followUpViewModel.Id);
+        var followUp = await _followUpService.GetFollowUpById(Convert.ToInt32(followUpViewModel.Id));
+        var activityLogs = await _followUpService.GetActivityLogsByFollowUpId(Convert.ToInt32(followUpViewModel.Id));
+
+        FollowUpViewModel model = new FollowUpViewModel();
+
+        model.Id = followUp.Id;
+        model.Name = followUp.Name;
+        model.UserId = followUp.UserId;
+        model.StartDate = followUp.StartDate;
+        model.FollowUpDate =followUp.FollowUpDate;
+        model.Project =followUp.Project;
+        model.Task = followUp.Task;
+
+        ViewBag.FollowUpViewModel = model;
+        ViewBag.activityLogs = activityLogs;
+        return View();
+
+    }
+
     // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     // public IActionResult Error()
     // {
