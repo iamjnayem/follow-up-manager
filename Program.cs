@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification;
 using Follow_Up_Manager.interfaces;
 using Follow_Up_Manager.Models;
 using Follow_Up_Manager.services;
@@ -15,8 +16,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddProgressiveWebApp();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddNotyf(config=> { config.DurationInSeconds = 3;config.IsDismissable = true;config.Position = NotyfPosition.TopRight; });
+
 builder.Services.AddScoped<IFollowUpService, FollowUpService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+
 
 
 

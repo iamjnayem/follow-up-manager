@@ -69,7 +69,7 @@
                         </tfoot>
                         <tbody>
                             @foreach(var item in ViewBag.dataList){
- <tr>
+                                <tr>
                                     <td>@item.Task</td>
                                     @* <td>@item.StartDate</td> *@
                                     @* <td>@(DateOnly.FromDateTime(@item.StartDate).ToString("dd-MM-yyyy"))</td> *@
@@ -79,11 +79,18 @@
                                     <td>@item.Name</td>
                                     <td>@item.Project</td>
                                     <td>
+                                    @if(item.Status != 1){
+
                                         <a asp-controller="FollowUp" asp-action="View" asp-route-id="@item.Id"  class="btn btn-sm btn-primary">View</a>
                                         <a asp-controller="FollowUp" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info">Edit</a>
-                                        <a asp-controller="FollowUp" asp-action="" class="btn btn-sm btn-warning ">Action</a>
-                                        <a asp-controller="FollowUp" asp-action="" class="btn btn-sm btn-danger ">Mark</a>
+                                        @* <a asp-controller="FollowUp" asp-action="" class="btn btn-sm btn-warning ">Action</a> *@
+                                        <a asp-controller="FollowUp" asp-action="Mark" asp-route-id="@item.Id" class="btn btn-sm btn-danger ">Mark</a>
+                                    
+                                    }else{
+                                         <a asp-controller="FollowUp" asp-action="View" asp-route-id="@item.Id"  class="btn btn-sm btn-primary">View</a>
+                                    }
                                     </td>
+                                    
                                 </tr>
                             }
                           

@@ -13,5 +13,7 @@ public class FollowUpViewModel
 
     public string? StartDate { get; set; }
 
+    public int? Status {get; set;}
+
     public string? FollowUpDate { get; set; }
 }

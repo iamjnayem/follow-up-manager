@@ -12,6 +12,8 @@ public interface IFollowUpService
 {
     Task<List<FollowUpViewModel>>? GetAllFollowUps();
     Task<FollowUpViewModel> GetFollowUpById(int id);
+    Task<bool> MarkFollowUp(int id);
+
     Task<List<ActivityLog>>? GetActivityLogsByFollowUpId(int id);
 
     Task<bool> StoreFollowUp(FollowUpViewModel followUpViewModel);

@@ -28,7 +28,6 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         @Html.Partial("_Sidebar")
 
         <!-- Content Wrapper -->
@@ -106,7 +105,10 @@
 
     <!-- Page level custom scripts -->
     @* <script src="~Theme/js/demo/datatables-demo.js"></script> *@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await Component.InvokeAsync("Notyf") 
     @await RenderSectionAsync("Scripts", required: false)
+
     </body>
 
 </html>
