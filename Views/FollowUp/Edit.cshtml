@@ -41,12 +41,12 @@
 
                                                 <div class="mb-3">
                                                     <label asp-for="StartDate">Start Date</label>
-                                                    <input class="form-control" id="start_date" asp-for="StartDate" type="text" value="@ViewBag.FollowUpViewModel.StartDate">
+                                                    <input class="form-control" id="start_date" asp-for="StartDate" type="text" value="@DateOnly.FromDateTime(@ViewBag.FollowUpViewModel.StartDate).ToString("dd-MM-yyyy")">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="FollowUpDate">Follow Up Date</label>
-                                                    <input class="form-control" id="follow_up_date" asp-for="FollowUpDate" type="text" value="@ViewBag.FollowUpViewModel.FollowUpDate">
+                                                    <input class="form-control" id="follow_up_date" asp-for="FollowUpDate" type="text" value="@DateOnly.FromDateTime(@ViewBag.FollowUpViewModel.FollowUpDate).ToString("dd-MM-yyyy")">
                                                 </div>
 
                                                 <div class="mb-3">

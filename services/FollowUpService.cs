@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Follow_Up_Manager.interfaces;
 using Follow_Up_Manager.Models;
@@ -69,11 +70,14 @@ public class FollowUpService : IFollowUpService
                 await _dbContext.AddAsync(followUp);
                 await _dbContext.SaveChangesAsync();
 
+                List<string> descriptionList = new List<string>();
+                descriptionList.Add("Follow Up Created");
+
                 ActivityLog activityLog = new ActivityLog
                 {
                     FollowUpId = followUp.Id,
                     UserId = long.Parse(userId),
-                    Description = "Follow Up Created",
+                    Description = JsonSerializer.Serialize(descriptionList),
                     CreatedAt = DateTime.Now
                 };
 
@@ -126,45 +130,72 @@ public class FollowUpService : IFollowUpService
 
     public async Task<bool> UpdateFollowUp(FollowUpViewModel followUpViewModel)
     {
-        try
+        using (var transaction = _dbContext.Database.BeginTransaction())
         {
-            var followUp = await _dbContext.FollowUps.FirstOrDefaultAsync(f => f.Id == followUpViewModel.Id);
-
-            if (followUp == null)
+            try
             {
-                return false;
+                var userId = _httpContextAccessor?.HttpContext?.Session.GetString("UserId");
+                var followUp = await _dbContext.FollowUps.FirstOrDefaultAsync(f => f.Id == followUpViewModel.Id);
+
+                if (followUp == null)
+                {
+                    return false;
+                }
+                List<string> descriptionList = new List<string>();
+
+
+                if (followUpViewModel.Name != followUp.Name)
+                {
+                    descriptionList.Add("Updated Name from " + followUp.Name + " to " + followUpViewModel.Name);
+                    followUp.Name = followUpViewModel.Name;
+                }
+
+                if (followUpViewModel.StartDate != followUp.StartDate)
+                {
+                    descriptionList.Add("Updated StartDate from " + followUp.StartDate + " to " + followUpViewModel.StartDate);
+                    followUp.StartDate = followUpViewModel.StartDate;
+                }
+
+                if (followUpViewModel.FollowUpDate != followUp.FollowUpDate)
+                {
+                    descriptionList.Add("Updated Follow Up Date  from " + followUp.FollowUpDate + " to " + followUpViewModel.FollowUpDate);
+                    followUp.FollowUpDate = followUpViewModel.FollowUpDate;
+                }
+
+                if (followUpViewModel.Project != followUp.Project)
+                {
+                    descriptionList.Add("Updated Project  from " + followUp.Project + " to " + followUpViewModel.Project);
+                    followUp.Project = followUpViewModel.Project;
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+
+
+                ActivityLog activityLog = new ActivityLog
+                {
+                    FollowUpId = followUp.Id,
+                    UserId = long.Parse(userId),
+                    Description = JsonSerializer.Serialize(descriptionList),
+                    CreatedAt = DateTime.Now
+                };
+
+                await _dbContext.AddAsync(activityLog);
+                await _dbContext.SaveChangesAsync();
+
+                transaction.Commit();
+
+                return true;
+
+
             }
-
-
-            if (followUpViewModel.Name != null)
+            catch (Exception e)
             {
-                followUp.Name = followUpViewModel.Name;
+                transaction.Rollback();
+                throw;
             }
-
-            if (followUpViewModel.StartDate != null)
-            {
-                followUp.StartDate = followUpViewModel.StartDate;
-            }
-
-            if (followUpViewModel.FollowUpDate != null)
-            {
-                followUp.FollowUpDate = followUpViewModel.FollowUpDate;
-            }
-
-            if (followUpViewModel.Project != null)
-            {
-                followUp.Project = followUpViewModel.Project;
-            }
-
-            await _dbContext.SaveChangesAsync();
-
-            return true;
-
         }
-        catch (Exception e)
-        {
-            throw;
-        }
+
 
     }
 
