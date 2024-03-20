@@ -54,14 +54,10 @@ public partial class FollowupContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("DATETIME")
                 .HasColumnName("created_at");
-            entity.Property(e => e.FollowUpDate)
-                .HasColumnType("DATETIME")
-                .HasColumnName("follow_up_date");
+            entity.Property(e => e.FollowUpDate).HasColumnName("follow_up_date");
             entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.Project).HasColumnName("project");
-            entity.Property(e => e.StartDate)
-                .HasColumnType("DATETIME")
-                .HasColumnName("start_date");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("0")
                 .HasColumnName("status");

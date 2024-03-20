@@ -13,15 +13,15 @@ public partial class FollowUp
 
     public string? Project { get; set; }
 
-    public DateTime? StartDate { get; set; }
+    public string? StartDate { get; set; }
 
-    public DateTime? FollowUpDate { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
+    public string? FollowUpDate { get; set; }
 
     public string Task { get; set; } = null!;
 
     public long? Status { get; set; }
+
+    public DateTime? CreatedAt { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
 }
