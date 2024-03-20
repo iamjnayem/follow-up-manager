@@ -11,7 +11,7 @@ public class FollowUpViewModel
     public string? Project { get; set; }
     public string? Task { get; set; }
 
-    public DateTime? StartDate { get; set; }
+    public string? StartDate { get; set; }
 
-    public DateTime? FollowUpDate { get; set; }
+    public string? FollowUpDate { get; set; }
 }
