@@ -42,26 +42,35 @@
 
                                                 <div class="mb-3">
                                                     <label asp-for="StartDate">Start Date</label>
-                                                    <input class="form-control" id="start_date" asp-for="StartDate" type="text"
-                                                        placeholder="Select Start Date">
+                                                    <input class="form-control" id="start_date" asp-for="StartDate"
+                                                        type="text" placeholder="Select Start Date">
+                                                        @if(TempData["start_date"] != null)
+                                                        {
+                                                            <span class="text-danger">@TempData["start_date"]</span>
+                                                        }
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="FollowUpDate">Follow Up Date</label>
-                                                    <input class="form-control" id="follow_up_date" asp-for="FollowUpDate" type="text"
+                                                    <input class="form-control" id="follow_up_date"
+                                                        asp-for="FollowUpDate" type="text"
                                                         placeholder="Select follow up Date">
+                                                         @if(TempData["follow_up_date"] != null)
+                                                        {
+                                                            <span class="text-danger">@TempData["follow_up_date"]</span>
+                                                        }
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="Name">Name</label>
-                                                    <input class="form-control" id="name" asp-for="Name"  type="text"
+                                                    <input class="form-control" id="name" asp-for="Name" type="text"
                                                         placeholder="Your Name" />
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="Project">Project</label>
-                                                    <input class="form-control" id="project" asp-for="Project" type="text"
-                                                        placeholder="Your Project" />
+                                                    <input class="form-control" id="project" asp-for="Project"
+                                                        type="text" placeholder="Your Project" />
                                                 </div>
 
                                                 <div class="mb-3">
@@ -85,15 +94,25 @@
 
 @section Scripts {
 
-<!-- Add Bootstrap Datepicker CSS and JS links -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <!-- Add Bootstrap Datepicker CSS and JS links -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-<script>
-    // Activate the datepicker
-    $(document).ready(function(){
-        $('#start_date').datepicker();
-        $('#follow_up_date').datepicker();
-    });
-</script>
+    <script>
+        // Activate the datepicker
+        $(document).ready(function () {
+            $('#start_date').datepicker({
+                format: 'dd-mm-yyyy', onSelect: function (selectedDate) {
+                    $(this).datepicker("option", "minDate", selectedDate);
+                    $('#follow_up_date').datepicker("option", "maxDate", selectedDate);
+                }
+            });
+            $('#follow_up_date').datepicker({
+                format: 'dd-mm-yyyy', onSelect: function (selectedDate) {
+                    $('#start_date').datepicker("option", "minDate", selectedDate);
+                }
+            });
+        });
+    </script>
 }

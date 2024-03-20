@@ -9,6 +9,7 @@ public class ActivityLogViewModel
     public long? FollowUpId { get; set; }
 
     public string? Description { get; set; }
+    public List<string>? HistoryList{get;set;}
 
     public DateTime? CreatedAt { get; set; }
 

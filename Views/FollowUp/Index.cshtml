@@ -72,8 +72,10 @@
  <tr>
                                     <td>@item.Task</td>
                                     @* <td>@item.StartDate</td> *@
-                                    <td>@(DateOnly.FromDateTime(@item.StartDate).ToString("dd-MM-yyyy"))</td>
-                                    <td>@(DateOnly.FromDateTime(@item.FollowUpDate).ToString("dd-MM-yyyy"))</td>
+                                    @* <td>@(DateOnly.FromDateTime(@item.StartDate).ToString("dd-MM-yyyy"))</td> *@
+                                    @* <td>@(DateOnly.FromDateTime(@item.FollowUpDate).ToString("dd-MM-yyyy"))</td> *@
+                                    <td>@item.StartDate</td>
+                                    <td>@item.FollowUpDate</td>
                                     <td>@item.Name</td>
                                     <td>@item.Project</td>
                                     <td>

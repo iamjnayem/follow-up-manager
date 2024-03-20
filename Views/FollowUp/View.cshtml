@@ -43,14 +43,14 @@
                                                 <div class="mb-3">
                                                     <label asp-for="StartDate">Start Date</label>
                                                     <input class="form-control" id="start_date" asp-for="StartDate"
-                                                        type="text" value="@DateOnly.FromDateTime(@ViewBag.FollowUpViewModel.StartDate).ToString("dd-MM-yyyy")" readonly>
+                                                        type="text" value="@ViewBag.FollowUpViewModel.StartDate" readonly>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label asp-for="FollowUpDate">Follow Up Date</label>
                                                     <input class="form-control" id="follow_up_date"
                                                         asp-for="FollowUpDate" type="text"
-                                                        value="@DateOnly.FromDateTime(@ViewBag.FollowUpViewModel.FollowUpDate).ToString("dd-MM-yyyy")" readonly>
+                                                        value="@ViewBag.FollowUpViewModel.FollowUpDate" readonly>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -85,7 +85,14 @@
 
                                 @foreach(var history in @ViewBag.activityLogs)
                                 {
-                                    <li class="nav-item"><a class="nav-link" href="#default">@history.Description</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#default">@history.CreatedAt.ToString("dd-mm-yyyy HH:mm:ss tt")</a></li>
+                                    <ul>
+                                        @foreach(var log in history.HistoryList)
+                                        {
+                                            <li>@log</li>
+                                        }
+                                    </ul>
+                                    <hr>
                                 }
                                 @* <li class="nav-item"><a class="nav-link" href="#solid">Solid Form Controls</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#checkbox">Default Checkboxes &amp;
