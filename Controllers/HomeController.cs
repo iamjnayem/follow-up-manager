@@ -8,16 +8,30 @@ namespace Follow_Up_Manager.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IConfiguration _configuration;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
     {
         _logger = logger;
+        _configuration = configuration;
+        
     }
 
     public IActionResult Index()
     {
+        ViewBag.applicationServerKey = _configuration["VAPID:publicKey"];
         return View();
     }
+
+    [HttpPost]
+    public IActionResult Index(string client, string endpoint, string p256dh, string auth)
+    {
+        
+        
+        return Ok("hello");
+        
+    }
+
 
     public IActionResult Privacy()
     {
