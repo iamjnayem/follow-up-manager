@@ -54,21 +54,15 @@ public class HomeController : Controller
         try
         {
             
-
-            Console.WriteLine("Client " + client);
-            Console.WriteLine(endpoint);
-            Console.WriteLine(p256dh);
-            Console.WriteLine(auth);
             var subscription = new PushSubscription(endpoint, p256dh, auth);
-            Console.WriteLine(subscription);
 
-            var checkAlreadySubscribled = await _notificationService.FindByClientId(client);
+            // var checkAlreadySubscribled = await _notificationService.FindByClientId(client);
 
-            if(checkAlreadySubscribled == true)
-            {
-                _notifyService.Information("You already registerd.");
-                return View();
-            }
+            // if(checkAlreadySubscribled == true)
+            // {
+            //     _notifyService.Information("You are already registered.");
+            //     return View();
+            // }
 
             var isSubscribed = await _notificationService.Subscribe(client, endpoint, p256dh, auth);
             _notifyService.Success("Subscribed successfully");

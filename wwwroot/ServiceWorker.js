@@ -39,8 +39,8 @@ self.addEventListener('notificationclick', function (e) {
     if (action === 'close') {
         notification.close();
     } else {
-        // Some actions
-        clients.openWindow('http://www.example.com');
+       
+        clients.openWindow('http://localhost:5292/FollowUp/Index');
         notification.close();
     }
 });

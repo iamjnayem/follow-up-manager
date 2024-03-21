@@ -23,7 +23,25 @@ public class FollowUpController : Controller
     {
         try
         {
-            ViewBag.dataList = await _followUpService.GetAllFollowUps();
+            var dataList = await _followUpService.GetAllFollowUps();
+
+            var marked = new List<FollowUpViewModel>();
+            var notMarked = new List<FollowUpViewModel>();
+
+            foreach(var data in dataList)
+            {
+                if(data.Status == 0)
+                {
+                    notMarked.Add(data);
+                }
+                else{
+                    marked.Add(data);
+                }
+            }
+
+            ViewBag.marked = marked;
+            ViewBag.notMarked = notMarked;
+
             return View();
         }
         catch (Exception e)

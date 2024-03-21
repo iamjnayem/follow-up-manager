@@ -19,7 +19,7 @@
             Your browser does not support Push Notifications or you have blocked notifications
         </div>
         <form asp-action="Index" id="form" style="display:none;">
-            <label for="client">Your name: </label>
+            @* <label for="client">Your name: </label> *@
             <input id="client" name="client" value="@ViewBag.userId" hidden/><br />
 
             <input id="endpoint" name="endpoint" hidden />

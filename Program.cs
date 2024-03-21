@@ -4,6 +4,9 @@ using Follow_Up_Manager.Models;
 using Follow_Up_Manager.services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Quartz.AspNetCore;
+using Quartz;
+using Follow_Up_Manager.schedulers;
 
 var Configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -11,6 +14,28 @@ var Configuration = new ConfigurationBuilder()
             .Build();
 
 var builder = WebApplication.CreateBuilder(args);
+
+string? showNotificationExpression = Configuration.GetValue<string>("schedulers:show_notification:cron_expression:show_notification");
+bool? isShowNotificationEnabled = Configuration.GetValue<bool>("schedulers:show_notification:on_off_switch:show_notification");
+
+builder.Services.AddQuartz(q =>
+{
+    if (isShowNotificationEnabled == true)
+    {
+        var jobKey = new JobKey("ShowNotificationJob");
+        q.AddJob<ShowNotificationJob>(opts => opts.WithIdentity(jobKey));
+        q.AddTrigger(opts => opts
+            .ForJob(jobKey)
+            .WithIdentity("ShowNotificationJob-trigger")
+            .WithCronSchedule(showNotificationExpression ?? string.Empty)
+        );
+    }
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -43,6 +68,9 @@ builder.Services.AddSession(option => {
     option.Cookie.IsEssential = true;
 
 });
+
+
+
 
 var app = builder.Build();
 

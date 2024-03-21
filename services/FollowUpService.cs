@@ -33,8 +33,6 @@ public class FollowUpService : IFollowUpService
             List<FollowUp> data = await _dbContext.FollowUps
                                 .Where(f => f.UserId == long.Parse(userId))
                                 .OrderBy(f => f.FollowUpDate) 
-                                .ThenBy(f => f.Status)
-                                // .ThenBy(f => f.Status == 0 ? DateTime.Parse(f.FollowUpDate) : DateTime.MaxValue)
                                 .ToListAsync();
 
             List<FollowUpViewModel> dataList = new List<FollowUpViewModel>();
