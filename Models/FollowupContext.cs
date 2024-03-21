@@ -77,6 +77,7 @@ public partial class FollowupContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Auth).HasColumnName("auth");
+            entity.Property(e => e.Client).HasColumnName("client");
             entity.Property(e => e.CreatedAt).HasColumnName("created_at");
             entity.Property(e => e.Endpoint).HasColumnName("endpoint");
             entity.Property(e => e.P256dh).HasColumnName("p256dh");

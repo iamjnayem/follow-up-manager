@@ -18,4 +18,6 @@ public partial class Notification
     public string? CreatedAt { get; set; }
 
     public string? UpdatedAt { get; set; }
+
+    public long? Client { get; set; }
 }

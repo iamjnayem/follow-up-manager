@@ -33,7 +33,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Index(string client, string endpoint, string p256dh, string auth)
+    public async Task<IActionResult> Index(string client, string endpoint, string p256dh, string auth)
     {
         
         // receive the data;
