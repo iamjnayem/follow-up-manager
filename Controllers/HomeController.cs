@@ -13,16 +13,21 @@ public class HomeController : Controller
     private readonly INotificationService _notificationService;
     private readonly IConfiguration _configuration;
 
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, INotificationService notificationService)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, INotificationService notificationService, IHttpContextAccessor httpContextAccessor)
     {
         _logger = logger;
         _configuration = configuration;
         _notificationService = notificationService;
-        
+        _httpContextAccessor = httpContextAccessor;
+
     }
 
     public IActionResult Index()
     {
+        ViewBag.userId = _httpContextAccessor?.HttpContext?.Session.GetString("UserId");
         ViewBag.applicationServerKey = _configuration["VAPID:publicKey"];
         return View();
     }
@@ -39,6 +44,9 @@ public class HomeController : Controller
         Console.WriteLine(auth);
         var subscription = new PushSubscription(endpoint, p256dh, auth);
         Console.WriteLine(subscription);
+
+
+        var isSubscribed = await _notificationService.Subscribe(endpoint, p256dh, auth);
         return View();
 
         
