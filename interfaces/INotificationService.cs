@@ -7,5 +7,6 @@ namespace Follow_Up_Manager.interfaces;
 
 public interface INotificationService
 {
-    Task<bool> Subscribe(string endpoint, string p256dh, string auth);
+    Task<bool> Subscribe(string client, string endpoint, string p256dh, string auth);
+    Task<bool> FindByClientId(string client);
 }
