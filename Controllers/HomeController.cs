@@ -3,18 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using Follow_Up_Manager.Models;
 using Microsoft.AspNetCore.Authorization;
 using WebPush;
+using Follow_Up_Manager.interfaces;
 
 namespace Follow_Up_Manager.Controllers;
 [Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly INotificationService _notificationService;
     private readonly IConfiguration _configuration;
 
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, INotificationService notificationService)
     {
         _logger = logger;
         _configuration = configuration;
+        _notificationService = notificationService;
         
     }
 
@@ -27,18 +30,17 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Index(string client, string endpoint, string p256dh, string auth)
     {
-        if(client == null)
-        {
-            return BadRequest("No Client Name parsed");
-        }
-        if(client == "nayem")
-        {
-            return Ok("Hello Nayem");
-        }
-        var subscription = new PushSubscription(endpoint, p256dh, auth);
-        // return View("Notify")
-        return View();
         
+        // receive the data;
+        // store the notification table
+        // send the response
+        Console.WriteLine(endpoint);
+        Console.WriteLine(p256dh);
+        Console.WriteLine(auth);
+        var subscription = new PushSubscription(endpoint, p256dh, auth);
+        Console.WriteLine(subscription);
+        return View();
+
         
     }
 

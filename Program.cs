@@ -21,11 +21,7 @@ builder.Services.AddNotyf(config=> { config.DurationInSeconds = 3;config.IsDismi
 
 builder.Services.AddScoped<IFollowUpService, FollowUpService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
-
-
-
-
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 builder.Services.AddDbContext<FollowupContext>(options =>
 {

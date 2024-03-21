@@ -76,14 +76,12 @@ public partial class FollowupContext : DbContext
             entity.ToTable("notifications");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.ClientId).HasColumnName("client_Id");
+            entity.Property(e => e.Auth).HasColumnName("auth");
             entity.Property(e => e.CreatedAt).HasColumnName("created_at");
-            entity.Property(e => e.Payload).HasColumnName("payload");
-            entity.Property(e => e.Status)
-                .HasDefaultValueSql("0")
-                .HasColumnName("status");
+            entity.Property(e => e.Endpoint).HasColumnName("endpoint");
+            entity.Property(e => e.P256dh).HasColumnName("p256dh");
+            entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
-            entity.Property(e => e.UserIdentifier).HasColumnName("user_identifier");
         });
 
         modelBuilder.Entity<User>(entity =>
