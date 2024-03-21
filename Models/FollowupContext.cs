@@ -19,6 +19,8 @@ public partial class FollowupContext : DbContext
 
     public virtual DbSet<FollowUp> FollowUps { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -67,6 +69,21 @@ public partial class FollowupContext : DbContext
                 .HasColumnType("DATETIME")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+        });
+
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.ToTable("notifications");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ClientId).HasColumnName("client_Id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.Payload).HasColumnName("payload");
+            entity.Property(e => e.Status)
+                .HasDefaultValueSql("0")
+                .HasColumnName("status");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UserIdentifier).HasColumnName("user_identifier");
         });
 
         modelBuilder.Entity<User>(entity =>
