@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Follow_Up_Manager.Models;
 using Microsoft.AspNetCore.Authorization;
+using WebPush;
 
 namespace Follow_Up_Manager.Controllers;
 [Authorize]
@@ -26,9 +27,18 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Index(string client, string endpoint, string p256dh, string auth)
     {
+        if(client == null)
+        {
+            return BadRequest("No Client Name parsed");
+        }
+        if(client == "nayem")
+        {
+            return Ok("Hello Nayem");
+        }
+        var subscription = new PushSubscription(endpoint, p256dh, auth);
+        // return View("Notify")
+        return View();
         
-        
-        return Ok("hello");
         
     }
 
